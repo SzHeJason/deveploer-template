@@ -1,0 +1,20 @@
+{
+  "rest-client.environmentVariables": {
+    "$shared": {},
+    "local": {
+      "host": "http://127.0.0.1:8080/api"
+    },
+    "production": {
+      "host": "http://blog.json.com/api"
+    }
+  },
+  "rest-client.defaultHeaders": {
+    "User-Agent": "vscode-restclient",
+    "Cookie": ""
+  },
+  "less.scannerExclude": [
+    "**/.git",
+    "**/node_modules/!(antd)/**",
+    "**/bower_components",
+  ]
+}
