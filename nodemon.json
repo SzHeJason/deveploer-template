@@ -5,7 +5,8 @@
   "delay": 1000,
   "ext": "ts",
   "env": {
-    "TS_NODE_FILES": true
+    "TS_NODE_FILES": true,
+    "NODE_ENV": "development"
   },
   "exec": "node $INSPECT -r ts-node/register ./src/app.ts"
 }

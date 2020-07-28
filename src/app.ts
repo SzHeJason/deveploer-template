@@ -1,7 +1,10 @@
-import http from 'http'
+import fastify from 'fastify'
 
-http.createServer((req, res) => {
-  res.end('Hello World!')
-}).listen('8080', () => {
-  console.log('listen 127.0.0.1:8080')
+import logger from './helper/logger'
+import config from './helper/config'
+
+const app = fastify({
+  logger: logger('http'),
 })
+
+app.listen(config.get('PORT'))
