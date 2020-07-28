@@ -11,7 +11,7 @@ class Config {
     this.payload = payload
   }
 
-  get(key: keyof IConfig) {
+  get<K extends keyof IConfig>(key: K): IConfig[K] {
     return this.payload[key]
   }
 
@@ -26,9 +26,10 @@ let config = defaultConfig
 
 if (NODE_ENV) {
   try {
-    const modulePath = path.join(__dirname, '../config', NODE_ENV)
+    const modulePath = path.join(__dirname, '../config', `${NODE_ENV}.ts`)
     const envConfig = require(modulePath)
-    config = Object.assign({}, config, envConfig)
+    // eslint-disable-next-line
+    config = Object.assign({}, config, envConfig.default)
   } catch (e) {}
 }
 
