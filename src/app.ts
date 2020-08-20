@@ -3,7 +3,7 @@ import fastify from 'fastify'
 import logger from './helper/logger'
 import config from './helper/config'
 
-import VisualOperationController from './controllers/visual-operation'
+import DemoController from './controllers/demo'
 
 const app = fastify({
   logger: logger({
@@ -11,6 +11,6 @@ const app = fastify({
   }),
 })
 
-app.register(VisualOperationController)
+app.register(DemoController)
 
 app.listen(config.get('PORT'))
