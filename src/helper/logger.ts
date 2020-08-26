@@ -3,17 +3,23 @@ import path from 'path'
 import pino from 'pino'
 import fs from 'fs-extra'
 
-import { isDevelopment, isProduction } from './environment'
 import config from './config'
 
+import { isDevelopment, isProduction } from './environment'
+
 const loggerCache: Record<string, pino.Logger> = {}
+
+const PINO_LOG_PATH = config.get('PINO_LOG_PATH')
+if (PINO_LOG_PATH) {
+  fs.ensureDirSync(PINO_LOG_PATH)
+}
 
 export default function createLogger(
   options: string | pino.LoggerOptions,
   destination?: pino.DestinationStream
 ) {
   const _options: pino.LoggerOptions = {
-    nestedKey: 'payload',
+    // nestedKey: 'payload',
     prettyPrint: isDevelopment,
     level: process.env.LOG_LEVEL || 'info',
   }
@@ -33,15 +39,12 @@ export default function createLogger(
   }
 
   let logger: pino.Logger
-  const basePath = config.get('LOG_BASE_PATH')
 
   if (destination) {
     logger = pino(_options, destination)
-  } else if (basePath && isProduction) {
+  } else if (PINO_LOG_PATH && isProduction) {
     // 将日志输出到文件
-    const dest = path.join(basePath, _options.name)
-
-    fs.ensureDirSync(basePath)
+    const dest = path.join(PINO_LOG_PATH, _options.name)
 
     logger = pino(
       _options,

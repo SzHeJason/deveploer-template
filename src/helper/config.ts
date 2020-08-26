@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-var-requires */
 import path from 'path'
 
-import defaultConfig from '../config/default'
 import IConfig from '../interfaces/config'
+import defaultConfig from '../config/default'
 
 class Config {
   payload: IConfig

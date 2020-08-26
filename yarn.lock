@@ -1624,10 +1624,25 @@ fast-safe-stringify@^2.0.7:
   resolved "http://r.tnpm.oa.com/fast-safe-stringify/download/fast-safe-stringify-2.0.7.tgz#124aa885899261f68aedb42a7c080de9da608743"
   integrity sha1-EkqohYmSYfaK7bQqfAgN6dpgh0M=
 
+fastify-cors@^4.1.0:
+  version "4.1.0"
+  resolved "http://r.tnpm.oa.com/fastify-cors/download/fastify-cors-4.1.0.tgz#ae6e2533f42b033a35da85ed3d585aafd56c2210"
+  integrity sha1-rm4lM/QrAzo12oXtPVhar9VsIhA=
+  dependencies:
+    fastify-plugin "^2.0.0"
+    vary "^1.1.2"
+
 fastify-error@^0.1.0:
   version "0.1.0"
   resolved "http://r.tnpm.oa.com/fastify-error/download/fastify-error-0.1.0.tgz#7ca9d3708a2b1a74aefed0e5dde1b96d0390f718"
   integrity sha1-fKnTcIorGnSu/tDl3eG5bQOQ9xg=
+
+fastify-plugin@^2.0.0:
+  version "2.3.2"
+  resolved "http://r.tnpm.oa.com/fastify-plugin/download/fastify-plugin-2.3.2.tgz#e8a30cae45e1f6b6e02b467eaee866a3459174f1"
+  integrity sha1-6KMMrkXh9rbgK0Z+ruhmo0WRdPE=
+  dependencies:
+    semver "^7.3.2"
 
 fastify-plugin@^2.0.1:
   version "2.0.1"
@@ -4195,6 +4210,11 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
+
+vary@^1.1.2:
+  version "1.1.2"
+  resolved "http://r.tnpm.oa.com/vary/download/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
+  integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
 which-pm-runs@^1.0.0:
   version "1.0.0"

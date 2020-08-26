@@ -8,9 +8,9 @@
     "debug": "cross-env INSPECT='--inspect' nodemon",
     "build": "tsc -p tsconfig.json",
     "check": "tsc --noEmit",
+    "clean": "rm -rf node_modules && rm -rf dist",
     "lint-staged": "lint-staged -d",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "compile-schemas": "json2ts -i ./src/schemas -o ./src/types"
   },
   "keywords": [],
@@ -25,6 +25,7 @@
     "axios": "^0.19.2",
     "cross-env": "^7.0.2",
     "fastify": "^3.1.1",
+    "fastify-cors": "^4.1.0",
     "fastify-plugin": "^2.0.1",
     "fs-extra": "^9.0.1",
     "lodash": "^4.17.19",

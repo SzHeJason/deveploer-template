@@ -44,6 +44,8 @@ module.exports = {
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         //
         '@typescript-eslint/no-floating-promises': 'off',
+        '@typescript-eslint/no-unsafe-return': 'warn',
+        '@typescript-eslint/no-unsafe-member-access': 'warn',
       },
     },
   ],
