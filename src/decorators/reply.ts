@@ -1,3 +1,6 @@
+/**
+ * 给 reply 对象追加 sendSuccess 函数
+ */
 import fastifyPlugin from 'fastify-plugin'
 import { FastifyPluginCallback, FastifyReply } from 'fastify'
 

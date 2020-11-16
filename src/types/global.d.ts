@@ -5,6 +5,7 @@ declare global {
     interface ProcessEnv {
       NODE_ENV: 'development' | 'production'
       PINO_LOG_PATH?: string
+      PROTOBUF_PATH: string
     }
   }
 }

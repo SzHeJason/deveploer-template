@@ -1,5 +1,17 @@
-@URL = {{host}}/api
+@URL = {{host}}/protobuf
 
 ##################################
 
-GET {{URL}}/app
+POST {{URL}}
+Content-Type: application/json
+
+{
+  "file": "rank.proto",
+  "packageName": "wesing.service.rank_center",
+  "serviceName": "RankCenter",
+  "action": "GetActivityConfig",
+  "address": "9.131.137.13:9000",
+  "payload": {
+    "activity_id": "5f4770ea45d664a6f853e462"
+  }
+}

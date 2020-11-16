@@ -2,7 +2,9 @@
 import path from 'path'
 
 import IConfig from '../interfaces/config'
-import defaultConfig from '../config/default'
+import baseConfig from '../config/base'
+
+const NODE_ENV = process.env.NODE_ENV
 
 class Config {
   payload: IConfig
@@ -20,9 +22,7 @@ class Config {
   }
 }
 
-const NODE_ENV = process.env.NODE_ENV
-
-let config = defaultConfig
+let config = baseConfig
 
 if (NODE_ENV) {
   try {

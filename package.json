@@ -4,7 +4,7 @@
   "description": "运营中台 wesing 项目转接层",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "cross-env PROTOBUF_PATH=$(pwd)/__PROTO__ nodemon",
     "debug": "cross-env INSPECT='--inspect' nodemon",
     "build": "tsc -p tsconfig.json",
     "check": "tsc --noEmit",
@@ -17,6 +17,8 @@
   "author": "kurthe",
   "license": "ISC",
   "dependencies": {
+    "@grpc/grpc-js": "^1.2.0",
+    "@grpc/proto-loader": "^0.5.5",
     "@types/axios": "^0.14.0",
     "@types/fs-extra": "^9.0.1",
     "@types/lodash": "^4.14.158",
@@ -29,7 +31,8 @@
     "fastify-plugin": "^2.0.1",
     "fs-extra": "^9.0.1",
     "lodash": "^4.17.19",
-    "pino": "^6.4.1"
+    "pino": "^6.4.1",
+    "type-fest": "^0.18.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",

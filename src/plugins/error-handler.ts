@@ -20,7 +20,7 @@ const ErrorHandler: FastifyPluginCallback = (server, options, done) => {
       return
     }
 
-    logger('server-error').fatal(error)
+    logger('server-error').error(error)
 
     reply.send(error)
   })

@@ -1,0 +1,399 @@
+syntax = "proto3";
+
+package wesing.service.rank_center;
+
+option go_package = "rank_center";
+
+import "google/protobuf/empty.proto";
+
+service RankCenter {
+  //增加配置
+  rpc AddActivityConfig(AddActivityConfigReq) returns (AddActivityConfigRsp);
+  //更新配置
+  rpc UpdateActivityConfig(UpdateActivityConfigReq) returns (google.protobuf.Empty);
+  //获取配置
+  rpc GetActivityConfig(GetActivityConfigReq) returns (GetActivityConfigRsp);
+  // 获取排行榜
+  rpc GetActivityRank(GetActivityRankReq) returns (GetActivityRankRsp);
+  // 获取用户自己的排行
+  rpc GetUserRank(GetUserRankReq) returns (GetUserRankRsp);
+  //增加全局配置
+  rpc AddActivityGlobalConfig(AddActivityGlobalConfigReq) returns (AddActivityGlobalConfigRsp);
+  //更新全局配置
+  rpc UpdateActivityGlobalConfig(UpdateActivityGlobalConfigReq) returns (google.protobuf.Empty);
+  //获取全局配置
+  rpc GetActivityGlobalConfig(GetActivityGlobalConfigReq) returns (GetActivityGlobalConfigRsp);
+}
+
+// 添加活动全局配置
+message AddActivityGlobalConfigReq {
+  // 活动名称
+  string name = 1;
+  // 状态0 下线, 1上线
+  int32 status = 2;
+  //活动展示的开始时间戳
+  uint64 start_time = 3;
+  //活动展示的结束时间戳
+  uint64 end_time = 4;
+  int32 country_id = 5;
+}
+
+message AddActivityGlobalConfigRsp {
+  // 活动id
+  string activity_id = 1;
+}
+
+message UpdateActivityGlobalConfigReq {
+  // 活动id
+  string activity_id = 1;
+  // 活动名称
+  string name = 2;
+  // 状态0 下线, 1上线
+  int32 status = 3;
+  //活动展示的开始时间戳
+  uint64 start_time = 4;
+  //活动展示的结束时间戳
+  uint64 end_time = 5;
+  int32 country_id = 6;
+}
+
+message GetActivityGlobalConfigReq {
+  // 活动id
+  string activity_id = 1;
+}
+
+message GetActivityGlobalConfigRsp {
+  // 活动id
+  string activity_id = 1;
+  // 活动名称
+  string name = 2;
+  // 状态0 下线, 1上线
+  int32 status = 3;
+  //活动展示的开始时间戳
+  uint64 start_time = 4;
+  //活动展示的结束时间戳
+  uint64 end_time = 5;
+  int32 country_id = 6;
+}
+
+message GetActivityConfigReq {
+  // 活动id
+  string activity_id = 1;
+}
+
+// 项目日限制
+message ItemLimit {
+  string field_name = 1;
+  // 每日限制数, 0 表示无限制
+  int64 limit = 2;
+}
+
+// 统计项
+message StatisticsField {
+  string field_name = 1;
+  // 系数
+  int64 factor = 2;
+  // 接收者每日限制数, 0 表示无限制
+  int64 limit = 3;
+  // 发送者每日限制
+  int64 send_limit = 4;
+  // 房间收礼每日限制
+  int64 room_limit = 5;
+  // 作品每日收礼限制
+  int64 ugc_limit = 6;
+}
+
+// 业务类型
+enum BusinessType {
+  BUSINESS_TYPE_INVALID = 0;
+  // 歌房
+  BUSINESS_TYPE_KTV_ROOM = 1;
+  // 直播间
+  BUSINESS_TYPE_LIVE_ROOM = 2;
+  // 异步作品
+  BUSINESS_TYPE_UGC = 3;
+  // 用户
+  BUSINESS_TYPE_USER = 4;
+}
+
+// 榜单周期类型
+enum RankPeriodType {
+  RANK_PERIOD_TYPE_INVALID = 0;
+  // 日榜
+  RANK_PERIOD_TYPE_DAY = 1;
+  // 周榜
+  RANK_PERIOD_TYPE_WEEK = 2;
+  // 总榜
+  RANK_PERIOD_TYPE_TOTAL = 3;
+}
+
+// 房间类型
+enum RoomType {
+  ROOM_TYPE_INVALID = 0;
+  ROOM_TYPE_KTV = 1;
+  ROOM_TYPE_LIVE = 2;
+}
+
+message GetActivityConfigRsp {
+  // 活动id
+  string activity_id = 1;
+  //开始时间戳
+  uint64 start_time = 2;
+  //结束时间戳
+  uint64 end_time = 3;
+  // 业务类型, 1 歌房, 2 直播间, 3 异步作品, 4 用户
+  int32 business_type = 4;
+  //榜单周期类型, 1 日榜, 2 周榜, 3 总榜
+  repeated int32 rank_period_type = 5;
+  // 白名单列表文件
+  string white_list = 6;
+  // 黑名单列表文件
+  string block_list = 7;
+  // 统计字段
+  repeated StatisticsField statistics_fields = 8;
+  // 礼物id列表
+  repeated int32 gift_ids = 9;
+  int32 country_id = 10;
+  // 活动名称
+  string name = 11;
+  // 状态, 0 下线, 1上线
+  int32 status = 12;
+  // 排行榜大小
+  int32 rank_size = 13;
+  //ugc_id 伴奏白名单列表
+  repeated string allow_half_ugc_list = 14;
+  // 排序类型, 0降序, 1升序
+  int32 order_type = 15;
+  // 减分礼物id, 配置了减分礼物则默认返回每一种礼物的得分, 只控制收礼榜单
+  repeated int32 deduction_gift_ids = 16;
+  // 排名中每一项top3排名类型, 现只支持房间送礼最多的用户或者收礼最多的用户. 1为送礼最多的用户, 2为收礼最多的用户
+  int32 sub_top_n_type = 17;
+  // 白名单类型, 0:房间或者收礼者, 1:房间, 2:收礼者
+  int32 white_list_type = 18;
+  // 保麦上榜最少需要的钻石数
+  int32 keep_mike_diamond = 19;
+}
+
+message AddActivityConfigReq {
+  //开始时间戳
+  uint64 start_time = 1;
+  //结束时间戳
+  uint64 end_time = 2;
+  // 业务类型, 1 歌房, 2 直播间, 3 异步作品, 4 用户
+  int32 business_type = 3;
+  //榜单周期类型, 1 日榜, 2 周榜, 3 总榜
+  repeated int32 rank_period_type = 4;
+  // 白名单列表文件
+  string white_list = 5;
+  // 黑名单列表文件
+  string block_list = 6;
+  // 统计字段
+  repeated StatisticsField statistics_fields = 7;
+  // 礼物id列表
+  repeated int32 gift_ids = 8;
+  int32 country_id = 9;
+  // 活动名称
+  string name = 10;
+  // 状态0 下线, 1上线
+  int32 status = 11;
+  // 排行榜大小
+  int32 rank_size = 12;
+  //ugc_id 伴奏白名单列表
+  repeated string allow_half_ugc_list = 13;
+  // 排序类型, 0降序, 1升序
+  int32 order_type = 14;
+  // 减分礼物id, 配置了减分礼物则默认返回每一种礼物的得分, 只控制收礼榜单
+  repeated int32 deduction_gift_ids = 15;
+  // 排名中每一项top3排名类型, 现只支持房间送礼最多的用户或者收礼最多的用户. 1为送礼最多的用户, 2为收礼最多的用户
+  int32 sub_top_n_type = 16;
+  // 白名单类型, 0:房间或者收礼者, 1:房间, 2:收礼者
+  int32 white_list_type = 17;
+  // 保麦上榜最少需要的钻石数
+  int32 keep_mike_diamond = 18;
+}
+
+message AddActivityConfigRsp {
+  // 活动id
+  string activity_id = 1;
+}
+
+message UpdateActivityConfigReq {
+  // 活动id
+  string activity_id = 1;
+  //开始时间戳
+  uint64 start_time = 2;
+  //结束时间戳
+  uint64 end_time = 3;
+  // 业务类型, 1 歌房, 2 直播间, 3 异步作品, 4 用户
+  int32 business_type = 4;
+  //榜单周期类型, 1 日榜, 2 周榜, 3 总榜
+  repeated int32 rank_period_type = 5;
+  // 白名单列表文件
+  string white_list = 6;
+  // 黑名单列表文件
+  string block_list = 7;
+  // 统计字段
+  repeated StatisticsField statistics_fields = 8;
+  // 礼物id列表
+  repeated int32 gift_ids = 9;
+  int32 country_id = 10;
+  // 活动名称
+  string name = 11;
+  // 状态0 下线, 1上线
+  int32 status = 12;
+  // 排行榜大小
+  int32 rank_size = 13;
+  //伴奏白名单列表
+  repeated string allow_half_ugc_list = 14;
+  // 排序类型, 0降序, 1升序
+  int32 order_type = 15;
+  // 减分礼物id, 配置了减分礼物则默认返回每一种礼物的得分, 只控制收礼榜单
+  repeated int32 deduction_gift_ids = 16;
+  // 排名中每一项top3排名类型, 现只支持房间送礼最多的用户或者收礼最多的用户. 1为送礼最多的用户, 2为收礼最多的用户
+  int32 sub_top_n_type = 17;
+  // 白名单类型, 0:房间或者收礼者, 1:房间, 2:收礼者
+  int32 white_list_type = 18;
+  // 保麦上榜最少需要的钻石数
+  int32 keep_mike_diamond = 19;
+}
+
+// 身份信息
+message MapAuth {
+  // 见 profile_webapp.jce AuthKey
+  int32 auth_key = 1;
+  string auth_value = 2;
+}
+
+message UserInfo {
+  int64 uid = 1;
+  //头像更新时间戳
+  int64 timestamp = 2;
+  string nick_name = 3;
+  repeated MapAuth map_auth = 4;
+}
+
+message RoomInfo {
+  // 房间id
+  string room_id = 1;
+  // 房间类型 1歌房, 2直播间
+  int32 room_type = 2;
+  // 房间是否在线
+  bool is_online = 3;
+  // 名称
+  string name = 4;
+  // 封面图
+  string face_url = 5;
+}
+
+message SongInfo {
+  // 歌曲名
+  string name = 1;
+  // 歌曲文件ID
+  string file_mid = 2;
+  // 歌手名称
+  string singer_name = 3;
+  // 专辑mid
+  string album_mid = 4;
+}
+
+message UgcTopic {
+  string ugc_id = 1;
+  string content = 2;
+  string cover = 3;
+  SongInfo song_info = 4;
+}
+
+message RankItem {
+  string field_name = 1;
+  int64 score = 2;
+  // 礼物id
+  int64 gift_id = 3;
+}
+
+message UserRankInfo {
+  UserInfo user_info = 1;
+  repeated RankItem rank_item = 2;
+  uint64 order = 3;
+  // 房间信息
+  RoomInfo room_info = 4;
+  // 是否关注
+  bool has_follow = 5;
+}
+
+// 作品排行信息
+message UgcRankInfo {
+  UgcTopic ugc_topic = 1;
+  repeated RankItem rank_item = 2;
+  uint64 order = 3;
+  UserInfo user_info = 4;
+}
+
+message RoomRankInfo {
+  // 房间信息
+  RoomInfo room_info = 1;
+  repeated RankItem rank_item = 2;
+  uint64 order = 3;
+  UserInfo user_info = 4;
+  // 房间送礼最多用户或者收礼最多用户
+  repeated UserRankInfo top_user = 5;
+}
+
+// 榜单类型
+enum RankType {
+  RANK_TYPE_INVALID = 0;
+  // 用户送出榜单
+  RANK_TYPE_USER_SEND = 1;
+  // 用户收获榜单
+  RANK_TYPE_USER_RECEIVE = 2;
+  // 房间收获榜单
+  RANK_TYPE_ROOM_RECEIVE = 3;
+  // 作品收获榜单
+  RANK_TYPE_UGC_RECEIVE = 4;
+}
+
+message GetActivityRankReq {
+  // 活动id
+  string activity_id = 1;
+  // 排行榜类型, 1 用户维度送出榜, 2 用户维度收获榜, 3 房间维度收获榜, 4 作品维度收获榜
+  int32 rank_type = 2;
+  uint64 offset = 3;
+  uint64 limit = 4;
+  // 当前用户uid
+  uint64 uid = 5;
+  // 榜单周期, 1 日榜, 2 周榜, 3 总榜
+  int32 rank_period_type = 6;
+}
+
+message GetActivityRankRsp {
+  // 活动id
+  string activity_id = 1;
+  repeated UserRankInfo user_rank_info = 2;
+  repeated UgcRankInfo ugc_rank_info = 3;
+  repeated RoomRankInfo room_rank_info = 4;
+  uint64 next_offset = 5;
+  bool has_more = 6;
+}
+
+message GetUserRankReq {
+  // 活动id
+  string activity_id = 1;
+  // 排行榜类型, 1 送出榜, 2 用户维度收获榜, 3 房间维度收获榜, 4 作品维度收获榜
+  int32 rank_type = 2;
+  uint64 uid = 3;
+  // 榜单周期, 1 日榜, 2 周榜, 3 总榜
+  int32 rank_period_type = 6;
+  //是否从房间跳转进入活动
+  bool is_from_room = 7;
+}
+
+message GetUserRankRsp {
+  // 活动id
+  string activity_id = 1;
+  UserRankInfo self_user_rank = 2;
+  UgcRankInfo self_ugc_rank = 3;
+  RoomRankInfo self_room_rank = 4;
+  // 上榜了距离上一名的差距
+  uint64 diff = 5;
+  // 距离上榜需要的数值, 和diff选择其中一个非0的值显示
+  uint64 rank_need = 6;
+}
