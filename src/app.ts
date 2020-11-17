@@ -13,7 +13,6 @@ import ProtobufController from './controllers/protobuf'
 const app = fastify({
   logger: Logger({
     name: 'http',
-    level: 'debug',
   }),
 })
 
@@ -34,4 +33,4 @@ app.register(ReplyDecorator)
  */
 app.register(ProtobufController, { prefix: '/api/protobuf' })
 
-app.listen(config.get('PORT'))
+app.listen(config.get('PORT'), '0.0.0.0')
