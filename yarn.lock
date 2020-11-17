@@ -256,6 +256,11 @@
   resolved "http://r.tnpm.oa.com/@protobufjs%2futf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
+"@sinclair/typebox@^0.12.6":
+  version "0.12.6"
+  resolved "http://r.tnpm.oa.com/@sinclair%2ftypebox/-/typebox-0.12.6.tgz#80273dc4e6fdaac53074b06a7e28db0cc804c00e"
+  integrity sha512-q3Gq3Vq9/lq55dDwTAd5ZpoNBy6bxuiNCXVW+BVuxyKIM0kS+cJ05d79Cg9dopZhgJGa05aKHBnKFullAwFLHg==
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "http://r.tnpm.oa.com/@sindresorhus/is/download/@sindresorhus/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"

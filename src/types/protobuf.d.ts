@@ -5,6 +5,13 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface HeadersSchema {
-  'H-Custom': string
+export interface ProtobufSchema {
+  file: string
+  address: string
+  packageName: string
+  serviceName: string
+  action: string
+  payload?: {
+    [k: string]: unknown
+  }
 }

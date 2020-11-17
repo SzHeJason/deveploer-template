@@ -19,6 +19,7 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.2.0",
     "@grpc/proto-loader": "^0.5.5",
+    "@sinclair/typebox": "^0.12.6",
     "@types/axios": "^0.14.0",
     "@types/fs-extra": "^9.0.1",
     "@types/lodash": "^4.14.158",

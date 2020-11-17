@@ -1,22 +1,21 @@
-import { FastifyPluginCallback, FastifyRequest } from 'fastify'
+import { FastifyPluginCallback } from 'fastify'
 
-import protobufService, { RequestParams } from '../services/protobuf'
+import protobufService from '../services/protobuf'
+
+import { bodySchema, BodySchme } from '../schemas/protobuf'
 
 const ProtobufController: FastifyPluginCallback = (server, options, next) => {
-  server.post(
+  server.post<{
+    Body: BodySchme
+  }>(
     '/',
-    async (request: FastifyRequest<{ Body: RequestParams }>, reply) => {
-      const res = await protobufService.request({
-        key: '9.131.136.26:9000',
-        file: 'rank.proto',
-        packageName: 'wesing.service.rank_center',
-        serviceName: 'RankCenter',
-        action: 'GetActivityConfig',
-        payload: {
-          activity_id: '5f4e2ad56f643136f6035e16',
-        },
-        ...request,
-      })
+    {
+      schema: {
+        body: bodySchema,
+      },
+    },
+    async (request, reply) => {
+      const res = await protobufService.request(request.body)
 
       reply.send(res)
     }

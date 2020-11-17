@@ -14,25 +14,20 @@ import {
 import ServiceError from '../helper/error'
 import ErrorCode from '../constants/code'
 
-export interface RequestParams<T = Record<string, unknown>> {
-  key: string
-  file: string
-  action: string
-  packageName: string
-  serviceName: string
-  payload: T
-}
+import { BodySchme } from '../schemas/protobuf'
+
+type RequestParams = BodySchme
 
 type GetServiceParams = SetOptional<RequestParams, 'action' | 'payload'>
 
 type GetPackageParams = SetOptional<
   RequestParams,
-  'action' | 'key' | 'serviceName' | 'payload'
+  'action' | 'address' | 'serviceName' | 'payload'
 >
 
 type GetDefinitionParams = SetOptional<
   RequestParams,
-  'action' | 'key' | 'packageName' | 'serviceName' | 'payload'
+  'action' | 'address' | 'packageName' | 'serviceName' | 'payload'
 >
 
 /**
@@ -104,7 +99,7 @@ export class ProtobufService {
   }
 
   async getService(params: GetServiceParams) {
-    const { serviceName, key } = params
+    const { serviceName, address } = params
 
     const protobufPackage = await this.getPackage(params)
 
@@ -118,7 +113,7 @@ export class ProtobufService {
     }
 
     return new (ServiceClient as ServiceClientConstructor)(
-      key,
+      address,
       grpc.credentials.createInsecure()
     )
   }
