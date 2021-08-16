@@ -1,6 +1,6 @@
 {
   "watch": [
-    "src"
+    "*"
   ],
   "delay": 1000,
   "ext": "ts",
@@ -8,5 +8,5 @@
     "TS_NODE_FILES": true,
     "NODE_ENV": "development"
   },
-  "exec": "node $INSPECT -r ts-node/register ./src/app.ts"
+  "exec": "node $INSPECT -r ts-node/register ./app.ts"
 }

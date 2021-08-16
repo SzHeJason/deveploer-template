@@ -1,28 +1,24 @@
-FROM node:14.15.1-alpine
+FROM node:14-alpine as builder
 
-LABEL maintainer="kurthe <kurthe@tencent.com>"
-LABEL descrition="protobuf service" 
+WORKDIR /build
 
-RUN apk add --no-cache --update bash
+COPY package.json yarn.lock tsconfig.json .npmrc  ./
+COPY app ./app
+COPY config ./config
+
+RUN yarn install --pure-lockfile  && \
+  yarn run tsc -- --outDir ./dist
+
+######## 分割线 ######## 
+
+
+FROM node:14-alpine
 
 WORKDIR /app
 
-COPY . .
+COPY --from=builder /build/dist ./
+COPY package.json yarn.lock .npmrc ./
 
-RUN \
-  yarn install --pure-lockfile && \
-  yarn run build && \
-  rm -rf /app/src
+RUN yarn install --pure-lockfile --production
 
-ENV PORT 9000
-ENV NODE_ENV='production'
-ENV PINO_LOG_PATH='/app/logs'
-ENV PROTOBUF_PATH='/app/protobufs'
-ENV LOG_LEVEL='info'
-
-EXPOSE ${PORT}
-
-CMD ["node", "./dist/app.js"]
-
-# Use to debug if things don't start:
-# CMD ["/bin/sh", "-c", "sleep 3600"]
+CMD ["npm","start"]
